@@ -1,0 +1,18 @@
+{
+  "name": "mtg_engine_cli",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^7.0.2"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@inquirer/prompts": "^8.7.2"
+  },
+  "bin":{
+    "mtge":"./bin/index.ts"
+  }
+}
