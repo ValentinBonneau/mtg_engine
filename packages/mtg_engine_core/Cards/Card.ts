@@ -8,9 +8,8 @@ export abstract class Card extends ClassWithUuid {
     zone?: IZone
     types: CardType[] = []
 
-    constructor(types:CardType[], zone?: IZone,owner?: Player) {
+    constructor(zone?: IZone,owner?: Player) {
         super()
-        this.types = types
 
         this.owner = owner
         this.zone = zone //?? owner

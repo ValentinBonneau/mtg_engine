@@ -3,7 +3,9 @@ import { ScryfallLayout, type ScryfallCard } from "@scryfall/api-types";
 import { Card } from ".";
 import { ScryfallAPI } from "../API/ScryfallAPI";
 import { CardNotFoundException } from "../utility/Exceptions";
-import type { CardType } from "./Card";
+import { CardType } from "./Card";
+import { ArtifactCard } from "./ArtifactCard";
+import { applyMixins } from "../utility/Functions/applyMixins";
 
 export class CardBuilder {
     static async fromOracleId(oracle_id: string): Promise<Card> {
@@ -12,43 +14,52 @@ export class CardBuilder {
             throw new CardNotFoundException()
         }
 
-        let final_card = class extends Card { }
+        class BuildedCard extends Card{}
 
-        let type_array_string: string[] = []
+        let types_class : any[] = []
+        const cardTypes : CardType[] = []
 
         if (scryfall_data.layout === ScryfallLayout.Normal) {
-            const scryfall_card: ScryfallCard.Normal = scryfall_data
             const [type_string, subtype_string] = scryfall_data.type_line.split(/[^a-zA-Z0-9\s]/)
-            type_array_string = type_string?.split(" ") ?? []
-        }
-
-        for (const type_string of type_array_string) {
-            switch (type_string) {
+            types_class = (type_string?.split(" ") ?? []).map((str_type)=>{
+                switch (type_string) {
                 case "Artifact":
-                    break
+                    cardTypes.push(CardType.Artifact)
+                    return ArtifactCard
                 case "Battle":
+                    cardTypes.push(CardType.Battle)
                     break
                 case "Conspiracy":
+                    cardTypes.push(CardType.Conspiracy)
                     break
                 case "Creature":
+                    cardTypes.push(CardType.Creature)
                     break
                 case "Dungeon":
+                    cardTypes.push(CardType.Dungeon)
                     break
                 case "Enchantment":
+                    cardTypes.push(CardType.Enchantment)
                     break
                 case "Instant":
+                    cardTypes.push(CardType.Instant)
                     break
                 case "Kindred":
+                    cardTypes.push(CardType.Kindred)
                     break
                 case "Land":
+                    cardTypes.push(CardType.Land)
                     break
                 case "Phenomenon":
+                    cardTypes.push(CardType.Phenomenon)
                     break
 
             }
+            })
+            
         }
 
-
-        return new final_card([])
+        applyMixins(BuildedCard,types_class)
+        return new BuildedCard()
     }
 }
