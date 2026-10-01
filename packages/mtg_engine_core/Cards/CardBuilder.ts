@@ -31,7 +31,7 @@ export class CardBuilder {
             override power?: string | undefined = card.power;
             override toughness?: string | undefined = card.toughness;
             override loyalty?: string | undefined = card.loyalty;
-            override defense?: string | undefined = card.;
+            override defense?: string | undefined = card.defense;
 
         }
 
