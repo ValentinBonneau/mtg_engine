@@ -13,18 +13,18 @@ export abstract class Card extends ClassWithUuid {
     abstract name: string
     abstract manacost : Manacost
     abstract ilustration : string // probably an URL #TODO ilustation may be change to add credit and legal text
-    abstract color: {
-        w: boolean
-        u: boolean
-        b: boolean
-        r: boolean
-        g: boolean
-    }
+    public color: {
+        w?: boolean
+        u?: boolean
+        b?: boolean
+        r?: boolean
+        g?: boolean
+    } = {}
     abstract textbox: string
-    abstract power? : number
-    abstract toughness? : number
-    abstract loyalty? : number
-    abstract defense? : number
+    abstract power? : string 
+    abstract toughness? : string
+    abstract loyalty? : string
+    abstract defense? : string
 
     constructor(zone?: IZone,owner?: Player) {
         super()
@@ -34,6 +34,7 @@ export abstract class Card extends ClassWithUuid {
     }
 }
 
+//CR 205.2a
 export enum CardType {
     Artifact,
     Battle,
